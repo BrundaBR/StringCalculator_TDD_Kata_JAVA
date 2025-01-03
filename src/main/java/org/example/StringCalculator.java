@@ -20,20 +20,26 @@ public class StringCalculator {
                 numbers = numbers.substring(matcher.end());
             }
         }
+
         String[] numArray = numbers.split(delimiter);
+        List<Integer> negatives = new ArrayList<>();
         // Process the numbers
         for (String numStr : numArray) {
             if (!numStr.isEmpty()) {
                 int num = Integer.parseInt(numStr);
 
                 if (num < 0) {
-                    // Ignore negative numbers and print a warning
-                    System.out.println("Warning: Ignoring negative number " + num);
+                    negatives.add(num); // Collect negatives
                 } else {
                     // Add positive numbers to the sum
                     sum += num;
                 }
             }
+        }
+
+        // Throw exception if there are any negatives
+        if (!negatives.isEmpty()) {
+            throw new RuntimeException("Negative numbers not allowed: " + negatives);
         }
         return sum;
     }
